@@ -1,7 +1,8 @@
 import type { FC } from 'react';
 import React from 'react';
-import { ModalType, type StudioItem, type Note } from '../types';
-import { Mic, Video, BrainCircuit, BookOpen, Plus } from 'lucide-react';
+import { ModalType, type StudioItem, type Note, GeneratedContent } from '../types';
+import { Mic, Layers3, BrainCircuit, BookOpen, Plus, ClipboardCheck } from 'lucide-react';
+import GeneratedContentCard from './GeneratedContentCard';
 
 interface StudioPanelProps {
   setActiveModal: (modal: ModalType | null) => void;
@@ -25,8 +26,8 @@ const StudioActionButton: FC<{icon: React.ElementType, title: string, onClick: (
 
 const NoteCard: FC<{note: Note}> = ({ note }) => {
     return (
-        <div className="bg-[var(--bg-tertiary)] p-3 rounded-lg animate-fade-in-up-sm">
-            <p className="text-sm text-[var(--text-primary)] line-clamp-4">{note.content || "Nova nota..."}</p>
+        <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg animate-fade-in-up-sm">
+            <p className="text-sm text-yellow-900 line-clamp-4">{note.content || "Nova nota..."}</p>
         </div>
     );
 };
@@ -35,9 +36,10 @@ const NoteCard: FC<{note: Note}> = ({ note }) => {
 const StudioPanel: FC<StudioPanelProps> = ({ setActiveModal, hasSources, studioItems, onAddNote }) => {
     const actions = [
         { icon: Mic, title: 'Resumo em Áudio', modal: ModalType.GENERATE_AUDIO_SUMMARY },
-        { icon: Video, title: 'Resumo em Vídeo', modal: null },
-        { icon: BrainCircuit, title: 'Mapa mental', modal: null },
         { icon: BookOpen, title: 'Relatórios', modal: ModalType.GENERATE_REPORT },
+        { icon: BrainCircuit, title: 'Mapa mental', modal: null },
+        { icon: Layers3, title: 'Cartões didáticos', modal: ModalType.GENERATE_FLASHCARDS },
+        { icon: ClipboardCheck, title: 'Teste', modal: ModalType.GENERATE_TEST },
     ];
     
   return (
@@ -74,8 +76,9 @@ const StudioPanel: FC<StudioPanelProps> = ({ setActiveModal, hasSources, studioI
                 studioItems.map(item => {
                     if (item.type === 'note') {
                         return <NoteCard key={item.id} note={item} />
+                    } else if ('status' in item) { // Check if it's a GeneratedContent
+                        return <GeneratedContentCard key={item.id} content={item} />
                     }
-                    // Render other studio item types here in the future
                     return null;
                 })
             )}

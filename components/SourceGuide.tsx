@@ -32,7 +32,7 @@ const SourceGuide: React.FC<SourceGuideProps> = ({ source, onBackToChat }) => {
                         <h2 className="font-semibold text-[var(--text-primary)] mb-3">Tópicos-chave</h2>
                         <div className="flex flex-wrap gap-2">
                             {source.keyTopics.map(topic => (
-                                <span key={topic} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                                <span key={topic} className="px-3 py-1 bg-[var(--accent-light)] text-[var(--accent-text-deep)] text-sm font-medium rounded-full">
                                     {topic}
                                 </span>
                             ))}

@@ -20,12 +20,12 @@ const Citation: FC<{ source?: Source, number: number }> = ({ source, number }) =
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <span className="bg-blue-100 text-[var(--accent-primary)] font-mono text-xs font-bold px-1.5 py-0.5 rounded-full cursor-pointer">
+      <span className="bg-[var(--accent-light)] text-[var(--accent-text-deep)] font-mono text-xs font-bold px-1.5 py-0.5 rounded-full cursor-pointer">
         {number}
       </span>
       {showTooltip && source && (
         <div className="absolute bottom-full mb-2 w-72 bg-[var(--text-primary)] border border-gray-700 p-3 rounded-lg text-xs text-gray-200 z-10 shadow-lg animate-fade-in-up-sm">
-          <p className="font-bold text-blue-400 mb-1 truncate">{source.name}</p>
+          <p className="font-bold text-purple-400 mb-1 truncate">{source.name}</p>
           <p className="line-clamp-3 text-gray-300">{source.content}</p>
         </div>
       )}
@@ -56,7 +56,7 @@ const ChatMessage: FC<{ message: Message; sources: Source[], onAddNote: (content
     <div className={`group flex flex-col gap-3 animate-fade-in-up-sm ${isUser ? 'items-end' : 'items-start'}`}>
       <div className={`flex items-start gap-3 w-full max-w-2xl ${isUser ? 'justify-end' : ''}`}>
         {!isUser && (
-          <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-[var(--accent-light)] flex items-center justify-center flex-shrink-0">
             <Bot size={20} className="text-[var(--accent-primary)]" />
           </div>
         )}

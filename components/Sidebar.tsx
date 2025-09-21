@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import type { Source } from '../types';
 import { ModalType } from '../types';
-import { Plus, Compass, FileText, CheckSquare, Square } from 'lucide-react';
+import { Plus, Compass, FileText, CheckSquare, Square, Trash2 } from 'lucide-react';
 
 interface SidebarProps {
   sources: Source[];
@@ -11,9 +11,10 @@ interface SidebarProps {
   setSelectedSourceIds: (ids: Set<string>) => void;
   onSelectSourceForGuide: (id: string | null) => void;
   activeSourceGuideId: string | null;
+  onDeleteSource: (id: string) => void;
 }
 
-const Sidebar: FC<SidebarProps> = ({ sources, onSetActiveModal, selectedSourceIds, setSelectedSourceIds, onSelectSourceForGuide, activeSourceGuideId }) => {
+const Sidebar: FC<SidebarProps> = ({ sources, onSetActiveModal, selectedSourceIds, setSelectedSourceIds, onSelectSourceForGuide, activeSourceGuideId, onDeleteSource }) => {
 
   const handleSourceSelection = (sourceId: string) => {
     const newSet = new Set(selectedSourceIds);
@@ -67,7 +68,7 @@ const Sidebar: FC<SidebarProps> = ({ sources, onSetActiveModal, selectedSourceId
                   key={source.id} 
                   className={`p-2 pl-1 rounded-lg flex items-center gap-3 cursor-pointer transition-all duration-200 group
                               ${activeSourceGuideId === source.id 
-                                  ? 'bg-blue-100' 
+                                  ? 'bg-[var(--accent-light)]' 
                                   : 'hover:bg-[var(--bg-tertiary)]'}`
                   }
               >
@@ -79,8 +80,15 @@ const Sidebar: FC<SidebarProps> = ({ sources, onSetActiveModal, selectedSourceId
                         ${selectedSourceIds.has(source.id) ? 'text-[var(--accent-primary)]' : 'text-[var(--text-tertiary)]'}
                         ${activeSourceGuideId === source.id ? 'text-[var(--accent-primary)]' : ''}
                     `} size={20} />
-                    <span className={`text-sm font-medium truncate ${activeSourceGuideId === source.id ? 'text-blue-800' : 'text-[var(--text-primary)]'}`}>{source.name}</span>
+                    <span className={`text-sm font-medium truncate ${activeSourceGuideId === source.id ? 'text-[var(--accent-text-deep)]' : 'text-[var(--text-primary)]'}`}>{source.name}</span>
                 </div>
+                 <button 
+                    onClick={() => onDeleteSource(source.id)} 
+                    className="p-1 text-[var(--text-tertiary)] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Deletar fonte"
+                 >
+                    <Trash2 size={14} />
+                 </button>
               </div>
             ))}
           </>
